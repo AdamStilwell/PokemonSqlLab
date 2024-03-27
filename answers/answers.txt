@@ -1,0 +1,43 @@
+What are all the types of pokemon that a pokemon can have?
+SELECT NAME FROM TYPES;
+
+What is the name of the pokemon with id 45?
+SELECT NAME FROM POKEMONS
+WHERE ID = 45;
+
+How many pokemon are there?
+SELECT COUNT(ID) FROM POKEMONS;
+
+How many types are there?
+SELECT COUNT(ID) FROM TYPES;
+
+How many pokemon have a secondary type?
+SELECT COUNT(SECONDARY_TYPE) FROM POKEMONS;
+
+What is each pokemon's primary type?
+SELECT pokemons.NAME, TYPES.NAME
+FROM POKEMONS INNER JOIN TYPES
+ON POKEMONS.primary_type = TYPES.ID;
+
+What is Rufflet's secondary type?
+SELECT pokemons.NAME, TYPES.NAME
+FROM POKEMONS INNER JOIN TYPES
+ON POKEMONS.secondary_type = TYPES.ID
+WHERE pokemons.NAME = 'Rufflet';
+
+What are the names of the pokemon that belong to the trainer with trainerID 303?
+SELECT pokemon_trainer.trainerID, pokemons.name
+FROM pokemon_trainer INNER JOIN pokemons
+ON pokemon_trainer.pokemon_id = pokemons.ID
+WHERE pokemon_trainer.trainerID = 303;
+
+How many pokemon have a secondary type Poison
+SELECT COUNT(POKEMONS.NAME) FROM pokemons
+INNER JOIN TYPES ON POKEMONS.secondary_type = TYPES.id
+WHERE types.name = 'Poison';
+
+What are all the primary types and how many pokemon have that type?
+SELECT MAX(types.name), COUNT(types.name) From pokemons
+INNER JOIN TYPES on pokemons.primary_type = types.id
+WHERE types.name = (SELECT MAX(types.name) From pokemons
+INNER JOIN TYPES on pokemons.primary_type = types.id);
